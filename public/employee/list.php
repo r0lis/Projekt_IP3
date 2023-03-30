@@ -34,11 +34,11 @@ class EmployeesPage extends CRUDPage
             }
             else if ($crudAction === self::ACTION_INSERT)
             {
-                $message = 'Místnost založena úspěšně';
+                $message = 'Zaměstnanec byl přidán úspěšně ';
             }
             else if ($crudAction === self::ACTION_UPDATE)
             {
-                $message = 'Úprava místnosti byla úspěšná';
+                $message = 'Úprava zaměstnance byla úspěšná';
             }
 
             $this->alert['message'] = $message;

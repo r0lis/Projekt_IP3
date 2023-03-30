@@ -6,6 +6,8 @@ class EmployeeUpdatePage extends CRUDPage
     private ?Employee $employee;
     private ?array $errors = [];
     private int $state;
+    private array $allRooms = [];
+    private array $mustacheArray = [];
 
     public function __construct()
     {
@@ -81,11 +83,28 @@ class EmployeeUpdatePage extends CRUDPage
 
     protected function pageBody()
     {
+        $this->room = Room::findByID($this->employee->room);
+        $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM room ORDER BY name;");
+        $stmt->execute();
+        $this->allRooms = $stmt->fetchAll();
+
+        for ($i = 0; $i < count($this->allRooms);$i++){
+                array_push($this->mustacheArray, $this->allRooms[$i]);
+
+        }
+        $admin = "";
+        if($this->employee->admin == 1){
+            $admin = "checked";
+        }
         return MustacheProvider::get()->render(
             'employeeForm',
             [
+                'formHeader' => 'Upravit zaměstnance',
+                'homeRoom' => $this->room,
                 'employee' => $this->employee,
-                'errors' => $this->errors
+                'errors' => $this->errors,
+                'rooms' => $this->mustacheArray,
+                'admin'=> $admin
             ]
         );
     }

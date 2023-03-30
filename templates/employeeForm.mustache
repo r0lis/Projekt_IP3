@@ -1,4 +1,4 @@
-<h2>Přidat zaměstnance:</h2>
+<h2>{{formHeader}}</h2>
 <form method="post">
     <div class="form-group">
         <label for="name">Jméno</label>
@@ -21,9 +21,16 @@
         {{#errors.wage}}<div class="d-block invalid-feedback">{{errors.wage}}</div>{{/errors.wage}}
     </div>
     <div class="form-group">
-        <label for="room">Místnost</label>
-        <input type="text" class="form-control" id="room" name="room" value="{{employee.room}}">
-        {{#errors.room}}<div class="d-block invalid-feedback">{{errors.room}}</div>{{/errors.room}}
+        <label for="room">Místnost</label><br>
+        <select class="form-control" id="room" name="room">
+            {{#homeRoom}}
+                <option value="{{room_id}}" style="background: lightblue">{{name}}</option>
+            {{/homeRoom}}
+
+            {{#rooms}}
+                <option value="{{room_id}}">{{name}}</option>
+            {{/rooms}}
+        </select>
     </div>
     <div class="form-group">
         <label for="login">Přihlašovací jméno</label>

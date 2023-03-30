@@ -79,13 +79,18 @@ class EmployeeCreatePage extends CRUDPage
     {
 
 
-            return MustacheProvider::get()->render(
-                'employeeForm',
-                [
-                    'employee' => $this->employee,
-                    'errors' => $this->errors
-                ]
-            );
+        $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM ". Room::DB_TABLE ." ORDER BY name;");
+        $stmt->execute();
+        $this->allRooms = $stmt->fetchAll();
+        return MustacheProvider::get()->render(
+            'employeeForm',
+            [
+                'formHeader' => 'Založit zaměstnance',
+                'employee' => $this->employee,
+                'rooms' => $this->allRooms,
+                'errors' => $this->errors
+            ]
+        );
 
 
 
