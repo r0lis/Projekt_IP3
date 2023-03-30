@@ -1,0 +1,15 @@
+    <nav>
+        <h1>Prohlížeč databáze zaměstnanců</h1>
+
+        {{#logged}}
+            <ul>
+                <li><a href="/room/list.php">Místnosti</a></li>
+                <li><a href="/employee/list.php">Lidé</a></li>
+            </ul>
+            <a class="btn btn-primary" href="/passChange.php">Změnit heslo</a>
+            <a class="btn btn-primary" href="/logout.php">Odhlásit se</a>
+        {{/logged}}
+        {{^logged}}
+            <a class="btn btn-primary" href="/login.php">Přihlásit se</a>
+        {{/logged}}
+    </nav>
