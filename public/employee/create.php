@@ -48,6 +48,7 @@ class EmployeeCreatePage extends CRUDPage
         elseif($this->state === self::STATE_DATA_SENT) {
             //načti je
             $this->employee = Employee::readPost();
+            $this->keys = filter_input(INPUT_POST, 'keys',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
             //zkontroluj je, jinak formulářss
             $this->errors = [];
