@@ -6,6 +6,7 @@ class EmployeeCreatePage extends CRUDPage
     private ?Employee $employee;
     private ?array $errors = [];
     private int $state;
+    private $keys;
 
     public function __construct()
     {
@@ -29,6 +30,18 @@ class EmployeeCreatePage extends CRUDPage
         {
             //jdi dál
             $this->employee = new Employee();
+
+            $stmtRoom = PDOProvider::get()->prepare("SELECT room_id, no, name FROM room ORDER BY no ASC");
+            $stmtRoom->execute([]);
+            while ($room = $stmtRoom->fetch())
+            {
+                $this->rooms[] = [
+                    'room_id' => $room->room_id,
+                    'no' => $room->no,
+                    'name' => $room->name,
+                    'selected' => $room->room_id == $this->employee->room
+                ];
+            }
         }
 
         //když poslal data
@@ -47,6 +60,13 @@ class EmployeeCreatePage extends CRUDPage
             {
                 //ulož je
                 $success = $this->employee->insert();
+
+                if($this->keys !== null){
+                    foreach ($this->keys AS $room_id){
+                        $key = new Key($room_id, $this->employee->employee_id);
+                        $key->insert();
+                    }
+                }
 
                 //přesměruj
                 $this->redirect(self::ACTION_INSERT, $success);

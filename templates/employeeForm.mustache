@@ -32,6 +32,13 @@
             {{/rooms}}
         </select>
     </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+        <label for="keys">Klíče k místnostem</label><br>
+        {{#rooms}}
+            <input type="checkbox" id="key{{room_id}}" name="keys[{{room_id}}]" value="{{room_id}}" {{#isActive}}checked{{/isActive}}>
+            <label for="keys[{{room_id}}]">{{no}} {{name}}</label><br>
+        {{/rooms}}
+    </div >
     <div class="form-group">
         <label for="login">Přihlašovací jméno</label>
         <input type="text" class="form-control" id="login" name="login" value="{{employee.login}}" required>
