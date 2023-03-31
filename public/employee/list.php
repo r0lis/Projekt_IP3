@@ -102,15 +102,11 @@ class EmployeesPage extends CRUDPage
             $admin = true;
         }
 
-
-
-
         //prezentovat data
         $html .= MustacheProvider::get()->render('employeesList',['employees' => $employees,'admin' => $admin]);
 
         return $html;
     }
-
 }
 
 $page = new EmployeesPage();

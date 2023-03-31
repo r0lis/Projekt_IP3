@@ -21,19 +21,17 @@ class RoomCreatePage extends CRUDPage
         $this->findState();
         $this->title = "Založit novou místnost";
 
-        //když chce formulář
+
         if ($this->state === self::STATE_FORM_REQUESTED)
         {
-            //jdi dál
+
             $this->room = new Room();
         }
 
-        //když poslal data
         elseif($this->state === self::STATE_DATA_SENT) {
-            //načti je
+
             $this->room = Room::readPost();
 
-            //zkontroluj je, jinak formulář
             $this->errors = [];
             $isOk = $this->room->validate($this->errors);
             if (!$isOk)
@@ -42,10 +40,8 @@ class RoomCreatePage extends CRUDPage
             }
             else
             {
-                //ulož je
                $success = $this->room->insert();
 
-                //přesměruj
                $this->redirect(self::ACTION_INSERT, $success);
             }
         }
@@ -90,7 +86,6 @@ class RoomCreatePage extends CRUDPage
         else
             $this->state = self::STATE_FORM_REQUESTED;
     }
-
 }
 
 $page = new RoomCreatePage();

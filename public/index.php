@@ -9,17 +9,11 @@ class IndexPage extends BasePage
         $this->title = "Prohlížeč databáze firmy";
     }
 
-
-
-
     protected function pageHeader(): string{
         $logged = false;
         if (isset($_SESSION['user'])) {
             $logged = true;
         }
-
-
-
         $navigation = '';
         if ($logged) {
             $navigation = MustacheProvider::get()->render(
@@ -33,6 +27,7 @@ class IndexPage extends BasePage
             ['logged' => $logged, 'navigation' => $navigation,]
         );
     }
+
     protected function pageBody()
     {
         if(isset($_SESSION['user'])) {
@@ -48,8 +43,6 @@ class IndexPage extends BasePage
 
 
     }
-
-
 }
 
 $page = new IndexPage();

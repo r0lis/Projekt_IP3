@@ -25,7 +25,6 @@ class LogoutPage extends BasePage
         return "<h1>Odhlášení proběhlo úspěšně</h1>
                 <a href='index.php'>Zpět na hlavní stránku</a>";
     }
-
 }
 
 $page = new LogoutPage();

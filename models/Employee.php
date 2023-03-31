@@ -207,9 +207,4 @@ class Employee
             session_destroy();
         return $stmt->execute(['employeeId'=>$employeeId]);
     }
-
-
-
-
-
 }

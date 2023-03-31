@@ -91,7 +91,6 @@ class RoomsPage extends CRUDPage
 
         return $html;
     }
-
 }
 
 $page = new RoomsPage();

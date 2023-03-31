@@ -4,12 +4,12 @@
         <th>Místnost</th>
         <th>Telefon</th>
         <th>Pozice</th>
+
 {{#admin}}
         <th>Actions</th>
 {{/admin}}
 
     </tr>
-
     {{#employees}}
         <tr>
             <td>
@@ -18,8 +18,8 @@
             <td>{{roomName}}</td>
             <td>{{phone}}</td>
             <td>{{job}}</td>
-        {{#admin}}
 
+        {{#admin}}
             <td>
                 <form action="update.php" method="get" style="display: inline-block">
                     <input type="hidden" name="employeeId" value="{{employee_id}}">
@@ -32,7 +32,6 @@
             </td>
         {{/admin}}
 
-
         </tr>
     {{/employees}}
     {{^employees}}
@@ -43,7 +42,6 @@
 
 {{#admin}}
     <a href="create.php" class="btn btn-primary" style="margin-bottom: 15px;">Zapsat nového zaměstnance</a>
-
 {{/admin}}
 
 

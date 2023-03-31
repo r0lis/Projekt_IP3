@@ -166,7 +166,6 @@ class EmployeeUpdatePage extends CRUDPage
         else
             $this->state = self::STATE_FORM_REQUESTED;
     }
-
 }
 
 $page = new EmployeeUpdatePage();
