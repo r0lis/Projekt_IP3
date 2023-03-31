@@ -1,0 +1,8 @@
+{
+  "smtp" : {
+    "host" : "smtp.gmail.com",
+    "user" : "lukyrolenec@gmail.com",
+    "password" : "apbacifdmoxtdhma",
+    "port" : 465
+  }
+}
