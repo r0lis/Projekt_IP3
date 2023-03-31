@@ -203,6 +203,8 @@ class Employee
         }
         $query = "DELETE FROM `".self::DB_TABLE."` WHERE `employee_id` = :employeeId";
         $stmt = PDOProvider::get()->prepare($query);
+        if($employeeId == $_SESSION['id'])
+            session_destroy();
         return $stmt->execute(['employeeId'=>$employeeId]);
     }
 

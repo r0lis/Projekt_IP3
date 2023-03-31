@@ -18,7 +18,7 @@ class LoginPage extends BasePage
         $this->pass = filter_input(INPUT_POST,'password');
 
         if($this->login !== null && $this->pass !== null){
-            $stmt = PDOProvider::get()->prepare("SELECT login, admin, password AS pass FROM employee WHERE login = :userLogin");
+            $stmt = PDOProvider::get()->prepare("SELECT login, admin, employee_id, password AS pass FROM employee WHERE login = :userLogin");
             $stmt->execute(['userLogin' => $this->login]);
             $user = $stmt->fetch();
 
@@ -30,6 +30,7 @@ class LoginPage extends BasePage
                     throw new InvalidPasswordException('Invalid password.');
                 }
                 $_SESSION['user'] = $user->login;
+                $_SESSION['id'] = $user->employee_id;
                 $_SESSION["loggedIn"] = true;
                 $_SESSION["admin"] = $this->checkAdmin($user);
                 $this->successMessage .= '<div class="alert alert-success" role="alert">Login successful.</div>';

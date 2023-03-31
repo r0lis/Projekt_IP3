@@ -10,6 +10,10 @@ class EmployeeDetailPage extends BasePage
     {
         session_start();
 
+        if (!isset($_SESSION['user'])) {
+            die("You are not authorized to access this page.".$_SESSION['admin']);
+        }
+
     }
 
 
