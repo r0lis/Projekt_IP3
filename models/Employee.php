@@ -153,7 +153,7 @@ class Employee
         if ($employee->job)
             $employee->job = trim($employee->job);
 
-        $employee->wage = filter_input(INPUT_POST, 'wage');
+        $employee->wage = filter_input(INPUT_POST, 'wage',FILTER_VALIDATE_INT);
         if ($employee->wage)
             $employee->wage = trim($employee->wage);
 
@@ -184,7 +184,15 @@ class Employee
             $errors['name'] = 'Jméno nesmí být prázdné';
 
         if (!isset($this->surname) || (!$this->surname))
-            $errors['surname'] = 'surname musí být vyplněno';
+            $errors['surname'] = 'Příjmení musí být vyplněno';
+
+        if (!isset($this->wage) || (!$this->wage))
+            $errors['wage'] = 'Plat musí být vyplněn';
+
+        if (!isset($this->room) || (!$this->room))
+            $errors['room'] = 'Neplatná místnost';
+
+
 
         return count($errors) === 0;
     }
