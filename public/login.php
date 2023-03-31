@@ -47,7 +47,7 @@ class LoginPage extends BasePage
     protected function pageBody() :string
     {
         return MustacheProvider::get()->render(
-            'changePass',
+            'loginForm',
             [ 'login' => $this->login,
                 'errorMessage' => $this->errorMessage,
                 'successMessage' => $this->successMessage

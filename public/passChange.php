@@ -27,14 +27,14 @@ class PasswordChangePage extends BasePage
             $user = $stmt->fetch();
 
             if (!password_verify($currentPassword, $user->pass)) {
-                $this->errorMessage .= '<div class="alert alert-danger" role="alert">The current password is incorrect.</div>';
+                $this->errorMessage .= 'The current password is incorrect';
             } elseif ($newPassword != $confirmPassword) {
-                $this->errorMessage .= '<div class="alert alert-danger" role="alert">The new password and confirm password do not match.</div>';
+                $this->errorMessage .= 'The new password and confirm password do not match.';
             } else {
                 $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                 $stmt = PDOProvider::get()->prepare("UPDATE employee SET password = :newPass WHERE login = :userLogin");
                 $stmt->execute(['newPass' => $hashedPassword, 'userLogin' => $_SESSION['user']]);
-                $this->successMessage .= '<div class="alert alert-success" role="alert">Password has been changed.</div>';
+                $this->successMessage .= 'Password has been changed';
             }
         }
 
@@ -43,25 +43,19 @@ class PasswordChangePage extends BasePage
 
     protected function pageBody(): string
     {
-        return '
-        <form method="post" class="my-form">
-            <div class="mb-3">
-                <label for="current_password" class="form-label">Aktuální heslo:</label>
-                <input type="password" id="current_password" name="current_password" class="form-control" style="width: 300px;" required/>
-            </div>
-            <div class="mb-3">
-                <label for="new_password" class="form-label">Nové heslo:</label>
-                <input type="password" id="new_password" name="new_password" class="form-control" style="width: 300px;" required/>
-            </div>
-            <div class="mb-3">
-                <label for="confirm_password" class="form-label">Potvrďte nové heslo:</label>
-                <input type="password" id="confirm_password" name="confirm_password" class="form-control" style="width: 300px;" required/>
-            </div>
-            '.$this->errorMessage.'
-            '.$this->successMessage.'
-            <button type="submit" class="btn btn-primary">Změnit heslo</button>
-        </form>
-    ';
+        $error = '';
+        if (!empty($this->errorMessage)) {
+            $error =  $this->errorMessage;
+        }
+
+        $successMessage = '';
+        if (!empty($this->successMessage)) {
+            $successMessage =  $this->successMessage;
+        }
+        return MustacheProvider::get()->render(
+            'passChange',
+            ['error' => $error, 'successMessage' => $successMessage]
+        );
     }
 
     protected function pageHeader(): string

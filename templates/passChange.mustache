@@ -1,0 +1,26 @@
+
+<form method="post" class="my-form">
+    <div class="mb-3">
+        <label for="current_password" class="form-label">Aktuální heslo:</label>
+        <input type="password" id="current_password" name="current_password" class="form-control" style="width: 300px;" required/>
+    </div>
+    <div class="mb-3">
+        <label for="new_password" class="form-label">Nové heslo:</label>
+        <input type="password" id="new_password" name="new_password" class="form-control" style="width: 300px;" required/>
+    </div>
+    <div class="mb-3">
+        <label for="confirm_password" class="form-label">Potvrďte nové heslo:</label>
+        <input type="password" id="confirm_password" name="confirm_password" class="form-control" style="width: 300px;" required/>
+    </div>
+    {{#error}}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+    {{/error}}
+    {{#successMessage}}
+        <div class="alert alert-success" role="alert">
+            {{successMessage}}
+        </div>
+    {{/successMessage}}
+    <button type="submit" class="btn btn-primary">Změnit heslo</button>
+</form>
