@@ -7,6 +7,7 @@ class EmployeeCreatePage extends CRUDPage
     private ?array $errors = [];
     private int $state;
     private $keys;
+    private $rooms;
 
     public function __construct()
     {
@@ -109,6 +110,7 @@ class EmployeeCreatePage extends CRUDPage
                 'formHeader' => 'Založit zaměstnance',
                 'employee' => $this->employee,
                 'rooms' => $this->allRooms,
+                'roomes' => $this->rooms,
                 'errors' => $this->errors
             ]
         );
