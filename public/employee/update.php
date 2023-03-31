@@ -7,7 +7,9 @@ class EmployeeUpdatePage extends CRUDPage
     private ?array $errors = [];
     private int $state;
     private array $allRooms = [];
+    private $keys;
     private array $mustacheArray = [];
+    private $rooms;
 
     public function __construct()
     {
@@ -34,6 +36,29 @@ class EmployeeUpdatePage extends CRUDPage
             $this->employee = Employee::findByID($employeeId );
             if (!$this->employee)
                 throw new NotFoundException();
+            $stmt = PDOProvider::get()->prepare("SELECT `key`.key_id AS key_id, `key`.room AS room, `room`.name AS room_name FROM `key` INNER JOIN `room` ON `key`.employee = :employeeId AND `key`.room = `room`.room_id ORDER BY room ASC");
+            $stmt->execute(['employeeId' => $employeeId]);
+            //$this->keys = $stmt->fetchAll();
+
+            $stmtRoom = PDOProvider::get()->prepare("SELECT room_id, no, name FROM room ORDER BY no ASC");
+            $stmtRoom->execute([]);
+
+            $keysAvailable = $key = $stmt->fetch();
+            while ($room = $stmtRoom->fetch())
+            {
+                $active = false;
+                if($keysAvailable && $key->room == $room->room_id){
+                    $active = true;
+                    $keysAvailable = $key = $stmt->fetch();
+                }
+                $this->rooms[] = [
+                    'room_id' => $room->room_id,
+                    'no' => $room->no,
+                    'name' => $room->name,
+                    'isActive' => $active,
+                    'selected' => $room->room_id == $this->employee->room
+                ];
+            }
 
         }
 
@@ -41,6 +66,7 @@ class EmployeeUpdatePage extends CRUDPage
         elseif($this->state === self::STATE_DATA_SENT) {
             //načti je
             $this->employee = Employee::readPost();
+            $this->keys = filter_input(INPUT_POST, 'keys',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
             //zkontroluj je, jinak formulář
             $this->errors = [];
@@ -51,7 +77,30 @@ class EmployeeUpdatePage extends CRUDPage
             }
             else
             {
-                //ulož je
+                $employeeId = $this->employee->employee_id;
+
+                $stmtUserKeys = PDOProvider::get()->prepare("SELECT room, key_id FROM `key` WHERE `employee` = :employeeId ORDER BY room ASC");
+                $stmtUserKeys->execute(['employeeId' => $this->employee->employee_id]);
+                //$userKeys = $stmtUserKeys->fetchAll();
+                while($key = $stmtUserKeys ->fetch()){
+                    $userKeys[$key->room] = $key->key_id;
+                }
+
+                $stmt = PDOProvider::get()->prepare("SELECT * FROM `key` INNER JOIN `room` ON `key`.employee = :employeeId AND `key`.room = `room`.room_id ORDER BY room ASC");
+
+
+                $allRooms = Room::getAll();
+
+                foreach ($allRooms AS $room){
+                    if(isset($userKeys[$room->room_id]) && !isset($this->keys[$room->room_id])){
+                        Key::deleteByID($userKeys[$room->room_id]);
+                    }
+                    else if(!isset($userKeys[$room->room_id]) && isset($this->keys[$room->room_id])){
+                        $key = new Key($room->room_id, $this->employee->employee_id);
+                        $key->insert();
+                    }
+                }
+
                 $success = $this->employee->update();
 
                 //přesměruj
@@ -104,6 +153,7 @@ class EmployeeUpdatePage extends CRUDPage
                 'employee' => $this->employee,
                 'errors' => $this->errors,
                 'rooms' => $this->mustacheArray,
+                'roomes' => $this->rooms,
                 'admin'=> $admin
             ]
         );

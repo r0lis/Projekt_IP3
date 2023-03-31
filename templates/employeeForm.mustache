@@ -34,10 +34,10 @@
     </div>
     <div class="form-group" style="margin-bottom: 15px;">
         <label for="keys">Klíče k místnostem</label><br>
-        {{#rooms}}
+        {{#roomes}}
             <input type="checkbox" id="key{{room_id}}" name="keys[{{room_id}}]" value="{{room_id}}" {{#isActive}}checked{{/isActive}}>
             <label for="keys[{{room_id}}]">{{no}} {{name}}</label><br>
-        {{/rooms}}
+        {{/roomes}}
     </div >
     <div class="form-group">
         <label for="login">Přihlašovací jméno</label>
