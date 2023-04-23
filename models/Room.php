@@ -132,8 +132,6 @@ class Room
         if (!isset($this->no) || (!$this->no))
             $errors['no'] = 'Číslo musí být vyplněno správně';
 
-        if (!isset($this->phone) || (!$this->phone))
-            $errors['phone'] = 'Telefoní číslo musí být vyplněno správně';
 
         return count($errors) === 0;
     }
@@ -151,7 +149,7 @@ class Room
         if ($room->no)
             $room->no = trim($room->no);
 
-        $room->phone = filter_input(INPUT_POST, 'phone',FILTER_VALIDATE_INT);
+        $room->phone = filter_input(INPUT_POST, 'phone');
         if ($room->phone)
             $room->phone = trim($room->phone);
         if (!$room->phone)

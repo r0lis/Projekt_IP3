@@ -110,8 +110,9 @@ class EmployeeCreatePage extends CRUDPage
                 'formHeader' => 'Založit zaměstnance',
                 'employee' => $this->employee,
                 'rooms' => $this->allRooms,
-                'roomes' => $this->rooms,
-                'errors' => $this->errors
+                'rooms2' => $this->rooms,
+                'errors' => $this->errors,
+                'update' => true
             ]
         );
 

@@ -153,8 +153,9 @@ class EmployeeUpdatePage extends CRUDPage
                 'employee' => $this->employee,
                 'errors' => $this->errors,
                 'rooms' => $this->mustacheArray,
-                'roomes' => $this->rooms,
-                'admin'=> $admin
+                'rooms2' => $this->rooms,
+                'admin'=> $admin,
+                'update' => false
             ]
         );
     }

@@ -35,7 +35,6 @@ class Employee
 
         if ($stmt->rowCount() < 1)
             return null;
-
         $employee = new self();
         $employee->hydrate($stmt->fetch());
         return $employee;
@@ -112,11 +111,11 @@ class Employee
 
     public function update() : bool
     {
-        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+
         if (!isset($this->employee_id) || !$this->employee_id)
             throw new Exception("Cannot update model without ID");
 
-        $query = "UPDATE ".self::DB_TABLE." SET `name` = :name, `surname` = :surname, `job` = :job, `wage` = :wage, `room` = :room, `login` = :login, `password` = :password, `admin` = :admin WHERE `employee_id` = :employee_id";
+        $query = "UPDATE ".self::DB_TABLE." SET `name` = :name, `surname` = :surname, `job` = :job, `wage` = :wage, `room` = :room, `login` = :login, `admin` = :admin WHERE `employee_id` = :employee_id";
         $stmt = PDOProvider::get()->prepare($query);
 
         if ($this->admin == 'on') {
@@ -131,7 +130,7 @@ class Employee
             'wage' => $this->wage,
             'room' => $this->room,
             'login' => $this->login,
-            'password' => $hashedPassword,
+
             'admin'=>$admin,
             'employee_id' => $this->employee_id,]);
     }
@@ -188,6 +187,8 @@ class Employee
 
         if (!isset($this->wage) || (!$this->wage))
             $errors['wage'] = 'Plat musí být vyplněn';
+        elseif ($this->wage < 0)
+            $errors['wage'] = 'Plat nesmí být záporný';
 
         if (!isset($this->room) || (!$this->room))
             $errors['room'] = 'Neplatná místnost';

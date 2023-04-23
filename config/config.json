@@ -4,7 +4,7 @@
   },
   "db": {
     "host" : "127.0.0.1",
-    "database" : "database name",
+    "database" : "database_name",
     "charset" : "utf8mb4"
   }
 }

@@ -34,21 +34,23 @@
     </div>
     <div class="form-group" style="margin-bottom: 15px;">
         <label for="keys">Klíče k místnostem</label><br>
-        {{#roomes}}
+        {{#rooms2}}
             <input type="checkbox" id="key{{room_id}}" name="keys[{{room_id}}]" value="{{room_id}}" {{#isActive}}checked{{/isActive}}>
             <label for="keys[{{room_id}}]">{{no}} {{name}}</label><br>
-        {{/roomes}}
+        {{/rooms2}}
     </div >
     <div class="form-group">
         <label for="login">Přihlašovací jméno</label>
         <input type="text" class="form-control" id="login" name="login" value="{{employee.login}}" required>
         {{#errors.login}}<div class="d-block invalid-feedback">{{errors.login}}</div>{{/errors.login}}
     </div>
+    {{#update}}
     <div class="form-group">
         <label for="password">Heslo</label>
         <input type="password" class="form-control" id="password" name="password" value="" required>
         {{#errors.password}}<div class="d-block invalid-feedback">{{errors.password}}</div>{{/errors.password}}
     </div>
+    {{/update}}
     <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="admin" name="admin" {{#employee.admin}}checked{{/employee.admin}}>
         <label class="form-check-label" for="admin">Admin</label>
