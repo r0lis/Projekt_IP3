@@ -135,6 +135,8 @@ class Employee
             'employee_id' => $this->employee_id,]);
     }
 
+
+
     public static function readPost() : self
     {
         $employee = new Employee();

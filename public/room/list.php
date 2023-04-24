@@ -26,9 +26,12 @@ class RoomsPage extends CRUDPage
             $this->alert = [
                 'alertClass' => $crudResult === 0 ? 'danger' : 'success'
             ];
-
-            $message = '';
-            if ($crudResult === 0)
+            $message = "";
+            if($crudAction === self::ACTION_DELETE && $crudResult  === 0)
+            {
+                $message = 'Místnost nejde smazat,protože ji mají někteří zaměstnanci jako domovskou gg';
+            }
+            else if ($crudResult === 0)
             {
                 $message = 'Operace nebyla úspěšná';
             }

@@ -58,9 +58,9 @@ abstract class BasePage
            if (AppConfig::get('debug'))
               throw $e;
 
-         $e = new BaseException("Server error", 500);
-         $exceptionPage = new ExceptionPage($e);
-         $exceptionPage->render();
+        $e = new BaseException("Server error", 500);
+        $exceptionPage = new ExceptionPage($e);
+        $exceptionPage->render();
          exit;     }
-    }
+   }
 }

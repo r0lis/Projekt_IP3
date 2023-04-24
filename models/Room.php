@@ -10,6 +10,7 @@ class Room
     public ?string $name;
     public ?string $no;
     public ?string $phone;
+    public ?array $homeRoomEmployee = [];
 
     /**
      * @param int|null $room_id
@@ -119,6 +120,12 @@ class Room
 
     public static function deleteByID(int $roomId) : bool
     {
+        $stmt = PDOProvider::get()->prepare("SELECT * FROM `employee` WHERE room = :roomId");
+        $stmt->execute(['roomId'=>$roomId]);
+        if($stmt->fetch()){
+            return false;
+        }
+
         $query = "DELETE FROM `".self::DB_TABLE."` WHERE `room_id` = :roomId";
         $stmt = PDOProvider::get()->prepare($query);
         return $stmt->execute(['roomId'=>$roomId]);
@@ -130,7 +137,7 @@ class Room
             $errors['name'] = 'Jméno nesmí být prázdné';
 
         if (!isset($this->no) || (!$this->no))
-            $errors['no'] = 'Číslo musí být vyplněno správně';
+            $errors['no'] = 'Číslo musí být vyplněno správně nebo takové už existuje';
 
 
         return count($errors) === 0;
