@@ -51,6 +51,15 @@
         {{#errors.password}}<div class="d-block invalid-feedback">{{errors.password}}</div>{{/errors.password}}
     </div>
     {{/update}}
+
+    {{#update2}}
+        <div class="form-group">
+            <label for="password">Heslo</label>
+            <input type="password" class="form-control" id="password" name="password" value="" >
+            {{#errors.password}}<div class="d-block invalid-feedback">{{errors.password}}</div>{{/errors.password}}
+        </div>
+    {{/update2}}
+
     <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="admin" name="admin" {{#employee.admin}}checked{{/employee.admin}}>
         <label class="form-check-label" for="admin">Admin</label>

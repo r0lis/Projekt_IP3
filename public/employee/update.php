@@ -56,7 +56,9 @@ class EmployeeUpdatePage extends CRUDPage
                     'no' => $room->no,
                     'name' => $room->name,
                     'isActive' => $active,
-                    'selected' => $room->room_id == $this->employee->room
+                    'selected' => $room->room_id == $this->employee->room,
+                    'update' => true
+
                 ];
             }
 
@@ -81,7 +83,7 @@ class EmployeeUpdatePage extends CRUDPage
 
                 $stmtUserKeys = PDOProvider::get()->prepare("SELECT room, key_id FROM `key` WHERE `employee` = :employeeId ORDER BY room ASC");
                 $stmtUserKeys->execute(['employeeId' => $this->employee->employee_id]);
-                //$userKeys = $stmtUserKeys->fetchAll();
+
                 while($key = $stmtUserKeys ->fetch()){
                     $userKeys[$key->room] = $key->key_id;
                 }
@@ -155,7 +157,7 @@ class EmployeeUpdatePage extends CRUDPage
                 'rooms' => $this->mustacheArray,
                 'rooms2' => $this->rooms,
                 'admin'=> $admin,
-                'update' => false
+                'update2' => true
             ]
         );
     }
